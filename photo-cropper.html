@@ -7,7 +7,7 @@
 		}
 
 		.modal-shadow {
-	      display: block;
+	      display: none;
 	      background: rgba(0,0,0,0.7);
 	      bottom: 0;
 	      left: 0;
@@ -42,27 +42,75 @@
 	      vertical-align: middle;
 	      width: 40%;
 	    }
-	​
+
 	    .modal-dialog-box h3 {
 	      margin: 5px 0 !important;
 	      font-size: 15px;
 	    }
-	​
+
 	    .modal-dialog-content {
 	      background: #ededed;
 	      width: 100%;
 	      height: 80%;
 	    }
-	​
+
 	    #photo-container {
 	      display: block;
 	      height: 100% !important;
 	      width: 100% !important;
 	    }
+
+		.button {
+  		  background: #3cba45;
+		  border: none;
+		  border-radius: 3px;
+		  color: #fff !important;
+		  cursor: pointer;
+		  display: inline-block;
+		  font-family: 'Open Sans';
+		  font-weight: bold;
+  		  font-size: 18px;
+		  margin: 2px 5px;
+  		  padding: 8px 12px;
+		  position: relative;
+		  text-decoration: none;
+		  transition: background 0.2s;
+		}
+
+		.button:hover {
+		  background: #34a23c;
+		}
+
+		#photo-file-container {
+			height: 150px;
+			position: relative;
+			width: 150px;
+		}
+
+		#photo-file-container #photoFile{
+			bottom: 0;
+			cursor: pointer;
+			display: block;
+			opacity: 0;
+			position: absolute;
+			top: 0;
+		}
+
+		#photo-file-container span {
+			display: inline-block;
+			font-family: 'Calibri' sans-serif !important;
+			height: 150px;
+			color: white;
+			width: 150px;
+		}
 	</style>
+	<link rel="stylesheet" href="bower_components/cropperjs/dist/cropper.min.css">
 	<template>
-		<input type="file" id="photoFile" on-change="openModal"/>
-		<div id="modal-dialog" class="modal-shadow">
+		<div id="photo-file-container" style$="background: url({{croppedImageURL}})">
+			<input type="file" id="photoFile" on-change="openModal" accept="image/*" />
+			<span>{{inputText}}</span>
+		</div>
+		<div id="modalDialog" class="modal-shadow">
       		<div class="modal-dialog-box">
        			<h3>Selecciona el area a cortar</h3>
 		        <div class="modal-dialog-content">
@@ -70,40 +118,67 @@
 		            <img id="photoPreview" alt="Some Text"/>
 		          </div>
 		        </div>
-		        <button id="setCropMode" type="button">Seleccionar</button>
-		        <button id="setMoveMode" type="button">Mover</button>
-		        <button id="closeModal" type="button">Listo</button>
+		        <button class="button" id="closeModal" type="button" on-click="closeModal">Listo</button>
 	      	</div>
     	</div>
-    	<button id="showModal" type="button">click</button>
 	</template>
+	<script src="bower_components/cropperjs/dist/cropper.min.js"></script>
 	<script>
 	Polymer({
 		is: 'photo-cropper',
 		properties: {
+			initialBackground: {
+				type: String,
+				value: 'gray-background.png'
+			},
 			croppedImageURL: {
 				type: String,
-				value: ''
+				value: '',
+				computed: 'getCroppedURL(initialBackground)'
 			},
 			photoId: {
 				type: String,
-				value: ''
+				value: 'myPhotos'
+			},
+			inputText: {
+				type: String,
+				value: 'Select picture'
 			}
 		},
-		openModal: function (event, detail) {
+		cropper: null,
+		ready: function() {
+			this.cropper = new Cropper(this.$.photoPreview,{
+				aspectRatio: 1/1,
+		        viewMode: 2,
+		        background: true,
+		        autoCropArea: 1,
+		        checkCrossOrigin: false
+			}); 
+		},
+		getCroppedURL: function (initialBackground) {
+			return initialBackground;
+		},
+		openModal: function () {
 			var 
 				FReader = new FileReader(),
 				that = this;
-				
 			FReader.readAsDataURL(that.$.photoFile.files[0]);
 
 			FReader.onload = function (FREvent) {
 				that.$.photoPreview.src = FREvent.target.result;
+				that.cropper.replace(that.$.photoPreview.src);
 			};
+
+			that.$.modalDialog.style.display = 'block';
 		},
 		closeModal: function (event, detail) {
 			var eventName = this.photoId + 'Cropped';
+			this.croppedImageURL = this.cropper.getCroppedCanvas({
+				width: 250,
+				height: 250
+			}).toDataURL();
 			this.fire(eventName, {croppedImageURL: this.croppedImageURL});
+			this.$.modalDialog.style.display = 'none';
 		}
 	});
 	</script>
