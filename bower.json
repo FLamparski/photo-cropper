@@ -1,0 +1,24 @@
+{
+  "name": "photo-cropper",
+  "homepage": "https://github.com/ReposDeHacks/photo-cropper",
+  "authors": [
+    "Alan Sanchez <sanchezpineda03@gmail.com>"
+  ],
+  "description": "Photo cropper based on Fengyuan Chen's Cropper jQuery plugin.",
+  "main": "photo-cropper.html",
+  "moduleType": [],
+  "keywords": [
+    "photo",
+    "cropper",
+    "crop",
+    "image"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
