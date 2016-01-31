@@ -61,13 +61,13 @@
 	    }
 	</style>
 	<template>
-		<input type="file" id="file" on-change="openModal"/>
+		<input type="file" id="photoFile" on-change="openModal"/>
 		<div id="modal-dialog" class="modal-shadow">
       		<div class="modal-dialog-box">
        			<h3>Selecciona el area a cortar</h3>
 		        <div class="modal-dialog-content">
 		          <div id="photo-container">
-		            <img id="photo" src="#" alt="Some Text"/>
+		            <img id="photoPreview" alt="Some Text"/>
 		          </div>
 		        </div>
 		        <button id="setCropMode" type="button">Seleccionar</button>
@@ -91,7 +91,15 @@
 			}
 		},
 		openModal: function (event, detail) {
-			// do stuff
+			var 
+				FReader = new FileReader(),
+				that = this;
+				
+			FReader.readAsDataURL(that.$.photoFile.files[0]);
+
+			FReader.onload = function (FREvent) {
+				that.$.photoPreview.src = FREvent.target.result;
+			};
 		},
 		closeModal: function (event, detail) {
 			var eventName = this.photoId + 'Cropped';
