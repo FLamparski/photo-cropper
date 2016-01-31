@@ -2,7 +2,9 @@
   "name": "photo-cropper",
   "homepage": "https://github.com/ReposDeHacks/photo-cropper",
   "authors": [
-    "Alan Sanchez <sanchezpineda03@gmail.com>"
+    "Alan Sanchez <sanchezpineda03@gmail.com>",
+    "Quetzalli Vargas <addmejia@gmail.com>",
+    "Edgar Sanchez <saes.shikarta@gmail.com>"
   ],
   "description": "Photo cropper based on Fengyuan Chen's Cropper jQuery plugin.",
   "main": "photo-cropper.html",
