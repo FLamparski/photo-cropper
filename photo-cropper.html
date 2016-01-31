@@ -13,13 +13,18 @@
 			croppedImageURL: {
 				type: String,
 				value: ''
+			},
+			photoId: {
+				type: String,
+				value: ''
 			}
 		},
 		openModal: function (event, detail) {
 			// do stuff
 		},
-		openModal: function (event, detail) {
-			this.fire('imageCropped', {croppedImageURL: this.croppedImageURL});
+		closeModal: function (event, detail) {
+			var eventName = this.photoId + 'Cropped';
+			this.fire(eventName, {croppedImageURL: this.croppedImageURL});
 		}
 	});
 	</script>
