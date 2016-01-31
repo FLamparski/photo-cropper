@@ -7,7 +7,7 @@
     "Edgar Sanchez <saes.shikarta@gmail.com>"
   ],
   "description": "Photo cropper based on Fengyuan Chen's Cropper jQuery plugin.",
-  "main": "photo-cropper.html",
+  "main": "photo-form.html",
   "moduleType": [],
   "keywords": [
     "photo",
@@ -26,6 +26,8 @@
   ],
   "dependencies": {
     "webcomponentsjs": "^0.7.20",
-    "polymer": "^1.2.4"
+    "polymer": "^1.2.4",
+    "jquery": "^2.2.0",
+    "cropper": "^2.2.5"
   }
 }

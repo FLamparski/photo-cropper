@@ -1,14 +1,26 @@
-<link rel="stylesheet" href="bower_components/polymer/polymer.html" />
+<link rel="import" href="bower_components/polymer/polymer.html" />
 
 <dom-module id="photo-cropper">
 	<style>
 	</style>
 	<template>
-		Hello world
+		<input type="file" id="file" on-change="openModal"/>
 	</template>
 	<script>
 	Polymer({
-		is: 'photo-cropper'
-	})
+		is: 'photo-cropper',
+		properties: {
+			croppedImageURL: {
+				type: String,
+				value: ''
+			}
+		},
+		openModal: function (event, detail) {
+			// do stuff
+		},
+		openModal: function (event, detail) {
+			this.fire('imageCropped', {croppedImageURL: this.croppedImageURL});
+		}
+	});
 	</script>
 </dom-module>
