@@ -82,6 +82,7 @@
 		}
 
 		#photo-file-container {
+			background-size: cover !important;
 			height: 150px;
 			padding: 0;
 			position: relative;
@@ -153,6 +154,10 @@
 			inputText: {
 				type: String,
 				value: 'Select picture'
+			},
+			resultingSize: {
+				type: Number,
+				value: 250
 			}
 		},
 		cropper: null,
@@ -185,8 +190,8 @@
 		closeModal: function (event, detail) {
 			var eventName = this.photoId + 'Cropped',
 				newURL = this.cropper.getCroppedCanvas({
-					width: 250,
-					height: 250
+					width: this.resultingSize,
+					height: this.resultingSize
 				}).toDataURL();
 			this.croppedImageURL = newURL;
 			this.fire(eventName, {croppedImageURL: this.croppedImageURL});
