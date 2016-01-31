@@ -83,6 +83,7 @@
 
 		#photo-file-container {
 			height: 150px;
+			padding: 0;
 			position: relative;
 			width: 150px;
 		}
@@ -96,11 +97,20 @@
 			top: 0;
 		}
 
-		#photo-file-container span {
-			display: inline-block;
-			font-family: 'Calibri' sans-serif !important;
+		#photo-file-container div {
+			background: rgba(0, 0, 0, 0.3);
+			display: table;
+			font-family: 'Arial', sans-serif !important;
 			height: 150px;
+		}
+
+		#photo-file-container div span {
 			color: white;
+			display: table-cell;
+			font-family: 'Arial', sans-serif !important;
+			height: 150px;
+			text-align: center;
+			vertical-align: middle;
 			width: 150px;
 		}
 	</style>
@@ -108,7 +118,7 @@
 	<template>
 		<div id="photo-file-container" style$="background: url({{croppedImageURL}})">
 			<input type="file" id="photoFile" on-change="openModal" accept="image/*" />
-			<span>{{inputText}}</span>
+			<div><span>{{inputText}}</span></div>
 		</div>
 		<div id="modalDialog" class="modal-shadow">
       		<div class="modal-dialog-box">
@@ -133,12 +143,11 @@
 			},
 			croppedImageURL: {
 				type: String,
-				value: '',
-				computed: 'getCroppedURL(initialBackground)'
+				value: ''
 			},
 			photoId: {
 				type: String,
-				value: 'myPhotos'
+				value: 'myPhoto'
 			},
 			inputText: {
 				type: String,
@@ -154,6 +163,7 @@
 		        autoCropArea: 1,
 		        checkCrossOrigin: false
 			}); 
+			this.croppedImageURL = this.initialBackground;
 		},
 		getCroppedURL: function (initialBackground) {
 			return initialBackground;
@@ -172,11 +182,12 @@
 			that.$.modalDialog.style.display = 'block';
 		},
 		closeModal: function (event, detail) {
-			var eventName = this.photoId + 'Cropped';
-			this.croppedImageURL = this.cropper.getCroppedCanvas({
-				width: 250,
-				height: 250
-			}).toDataURL();
+			var eventName = this.photoId + 'Cropped',
+				newURL = this.cropper.getCroppedCanvas({
+					width: 250,
+					height: 250
+				}).toDataURL();
+			this.croppedImageURL = newURL;
 			this.fire(eventName, {croppedImageURL: this.croppedImageURL});
 			this.$.modalDialog.style.display = 'none';
 		}

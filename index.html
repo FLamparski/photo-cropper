@@ -8,6 +8,13 @@
 	<link rel="import" href="photo-cropper.html" />
 </head>
 <body>
-	<photo-cropper></photo-cropper>
+	<photo-cropper></photo-cropper><br><br><br>
+	<script>
+	(function (x) {
+		x.querySelector('photo-cropper').addEventListener('myPhotoCropped', function(event) {
+			console.log(event.detail.croppedImageURL);
+		});
+	})(document);
+	</script>
 </body>
 </html>
