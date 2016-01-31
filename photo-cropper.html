@@ -1,4 +1,4 @@
-<link rel="import" href="bower_components/polymer/polymer.html" />
+<link rel="import" href="../bower_components/polymer/polymer.html" />
 
 <dom-module id="photo-cropper">
 	<style>
@@ -116,7 +116,7 @@
 			width: 150px;
 		}
 	</style>
-	<link rel="stylesheet" href="bower_components/cropperjs/dist/cropper.min.css">
+	<link rel="stylesheet" href="../bower_components/cropperjs/dist/cropper.min.css">
 	<template>
 		<div id="photo-file-container" style$="background: url({{croppedImageURL}})">
 			<input type="file" id="photoFile" on-change="openModal" accept="image/*" />
@@ -134,7 +134,7 @@
 	      	</div>
     	</div>
 	</template>
-	<script src="bower_components/cropperjs/dist/cropper.min.js"></script>
+	<script src="../bower_components/cropperjs/dist/cropper.min.js"></script>
 	<script>
 	Polymer({
 		is: 'photo-cropper',
