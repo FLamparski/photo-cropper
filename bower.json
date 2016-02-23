@@ -1,7 +1,8 @@
 {
-  "name": "photo-cropper",
-  "homepage": "https://github.com/ReposDeHacks/photo-cropper",
+  "name": "minimal-photo-cropper",
+  "homepage": "https://github.com/FLamparski/photo-cropper",
   "authors": [
+    "Filip Wieland <hello@filipwieland.com>",
     "Alan Sanchez <sanchezpineda03@gmail.com>",
     "Quetzalli Vargas <addmejia@gmail.com>",
     "Edgar Sanchez <saes.shikarta@gmail.com>"
