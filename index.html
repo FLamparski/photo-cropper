@@ -4,17 +4,32 @@
 	<meta charset="UTF-8">
 	<title>Photo cropper demo</title>
 	<script src="bower_components/webcomponentsjs/webcomponents.js"></script>
-	<link rel="import" href="bower_components/polymer/polymer.html" />
 	<link rel="import" href="photo-cropper.html" />
 </head>
 <body>
-	<photo-cropper></photo-cropper><br>
+  <input id="uploader" type="file" accept="image/*"><br>
+	<photo-cropper crop-width="300" aspect-ratio-"1" style="width: 600px; height: 600px"></photo-cropper><br>
 	<b>Cropped picture URL: </b> <a id="new-url" href="#"></span>
 	<script>
 	(function (x) {
-		x.querySelector('photo-cropper').addEventListener('myPhotoCropped', function(event) {
-			document.getElementById('new-url').innerHTML = event.detail.croppedImageURL;
-			document.getElementById('new-url').href = event.detail.croppedImageURL;
+    var cropper = x.querySelector('photo-cropper');
+    var bloburl = '';
+    x.querySelector('#uploader').addEventListener('change', function(e) {
+      var reader = new FileReader();
+      reader.onload = function(e) {
+        console.log('Read image to crop.');
+        cropper.replaceImage(e.target.result);
+      };
+      reader.readAsDataURL(e.target.files[0]);
+      console.log('Reading image...');
+    });
+		x.querySelector('photo-cropper').addEventListener('cropped-image-changed', function(event) {
+      if (bloburl) {
+        URL.revokeObjectURL(bloburl);
+      }
+      bloburl = URL.createObjectURL(event.detail.value);
+			document.getElementById('new-url').innerHTML = bloburl;
+			document.getElementById('new-url').href = bloburl;
 		});
 	})(document);
 	</script>
