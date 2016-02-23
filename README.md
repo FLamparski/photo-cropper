@@ -1,48 +1,43 @@
 # photo-cropper
-*Photo Cropper es un web component que facilita el recorte de una imagen*
 
-<h2>Features</h2>
-<ul>
-<li>Responsive design</li>
-<li>El cropper box puede ser arrastrado a cualquier parte de la imagen</li>
-<li>Construido mediante HTML5, CSS, Javascript y CropperJs</li>
-</ul>
+This is the minimal version of the [ReposDeHacks' `photo-cropper`][1] component.
 
-<h2>Dependencias</h2>
-<ul>
-<li>WebcomponentsJs</li>
-<li>Polymer</li>
-<li>CropperJs</li>
-</ul>
+`photo-cropper` is essentially a wrapper around [cropper.js][2]. This version is embeddable
+in any UI (the original provided its own modal window).
 
-<h2>API</h2>
-<h3>initial-background</h3>
-> type: String
+## Usage
 
-> default: 'gray-background.png' (incuido en el paquete de bower)
+In the HTML:
 
-  Imagen que se utiiza como fondodel boton antes de que se utilice por primera vez.
-<h3>photo-id</h3>
-> type: String
+```
+<photo-cropper id="cropper" crop-width="300" aspect-ratio="1" style="width: 600px; height: 600px"></photo-cropper>
+```
 
-> default: 'myPhoto'
+**Note:** Custom sizing is intentionally required.
 
-  Identidficador de la imagen que se selecciona para ser recortada, util en caso de que se deseen utilizar varios photo-cropper en un mismo formulario. A su vez, este identificador se utilizará para obtener la URL de la imagen resultante.
-  
-<h3>input-text</h3>
-> type: String
+In the JavaScript:
 
-> default: 'Select picture'
+```
+// to load an image into the cropper:
+this.$.cropper.replaceImage(someDataURL);
 
-  Mensaje de petición, modificable, de imagenes.
-<h3>resulting-size</h3>
-> type: Number
+// listening to crop changes:
+this.$.cropper.addEventListener('cropped-image-changed', function(e) {
+  var blob = e.detail.value; // Cropped image is a Blob.
+});
+```
 
-> default: 250
+## Authors
 
-  Medida en píxeles que se usará tanto en el ancho como en el largo de la imagen final (1:1)
+Original version:
 
-<h2>Autores</h2>
-Sánchez Pineda Alan <sanchezpineda03@gmail.com></br>
-Sánchez Alamilla Edgar <sae.shikarta@gmail.com></br>
-Vargas Mejía Quetzalli <addmejia@gmail.com></br>
+* Sánchez Pineda Alan <sanchezpineda03@gmail.com>
+* Sánchez Alamilla Edgar <sae.shikarta@gmail.com>
+* Vargas Mejía Quetzalli <addmejia@gmail.com>
+
+Minimal adaptation:
+
+* Filip Wieland <hello@filipwieland.com>
+
+[1]: https://github.com/ReposDeHacks/photo-cropper
+[2]: https://github.com/fengyuanchen/cropperjs
