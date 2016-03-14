@@ -1,25 +1,35 @@
 <link rel="import" href="../polymer/polymer.html" />
+<link rel="import" href="photo-cropper-style.html">
 
 <dom-module id="photo-cropper">
-	<style>
-		:host {
-			display: block;
-		}
-	</style>
-  <link rel="stylesheet" href="../cropperjs/dist/cropper.min.css">
-	<template>
-    <img id="photoPreview" alt="Image to crop"/>
-	</template>
-  <script src="../cropperjs/dist/cropper.min.js"></script>
-	<script>
-	Polymer({
-		is: 'photo-cropper',
-		properties: {
-			croppedImage: {
-				type: Blob,
-				value: null,
+  <style include="photo-cropper-style">
+    :host {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+    img {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+  </style>
+  <template>
+    <div>
+      <img id="photoPreview" alt="Image to crop"/>
+    </div>
+  </template>
+  <script src="../cropperjs/dist/cropper.js"></script>
+  <script src="../lodash/dist/lodash.min.js"></script>
+  <script>
+  Polymer({
+    is: 'photo-cropper',
+    properties: {
+      croppedImage: {
+        type: Blob,
+        value: null,
         notify: true
-			},
+      },
       cropWidth: {
         type: Number,
         value: 250
@@ -28,16 +38,17 @@
         type: Number,
         value: 1 //square
       }
-		},
-		cropper: null,
-		ready: function() {
-			this.cropper = new Cropper(this.$.photoPreview, {
-				aspectRatio: this.aspectRatio,
+    },
+    cropper: null,
+    ready: function() {
+      this.cropper = new Cropper(this.$.photoPreview, {
+        aspectRatio: this.aspectRatio,
         viewMode: 2,
         background: true,
         autoCropArea: 1,
         checkCrossOrigin: false,
-        crop: function(e) {
+        responsive: true,
+        crop: _.debounce(function(e) {
           var canvas = this.cropper.getCroppedCanvas({
             width: this.cropWidth,
             height: this.cropWidth * (1/this.aspectRatio)
@@ -45,12 +56,12 @@
           canvas.toBlob(function(blob) {
             this.set('croppedImage', blob);
           }.bind(this));
-        }.bind(this)
-			}); 
-		},
+        }.bind(this), 50)
+      });
+    },
     replaceImage: function(src) {
       this.cropper.replace(src);
     }
   });
-	</script>
+  </script>
 </dom-module>

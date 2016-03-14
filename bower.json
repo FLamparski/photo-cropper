@@ -28,6 +28,7 @@
   "dependencies": {
     "webcomponentsjs": "^0.7.20",
     "polymer": "^1.2.4",
-    "cropperjs": "^0.5.6"
+    "cropperjs": "^0.5.6",
+    "lodash": "~4.6.1"
   }
 }
